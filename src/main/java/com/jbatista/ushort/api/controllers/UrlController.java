@@ -1,7 +1,7 @@
 package com.jbatista.ushort.api.controllers;
 
 import com.jbatista.ushort.api.entities.Address;
-import com.jbatista.ushort.api.services.UrlManager;
+import com.jbatista.ushort.api.services.UrlProcessor;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,16 +18,16 @@ import org.springframework.web.servlet.view.RedirectView;
 public class UrlController {
 
     @Autowired
-    private UrlManager urlManager;
+    private UrlProcessor urlProcessor;
 
     @RequestMapping(path = "/{shortUrl}", method = RequestMethod.GET)
     public RedirectView access(@PathVariable String shortUrl) {
-        return new RedirectView(urlManager.getFull(shortUrl), false);
+        return new RedirectView(urlProcessor.getFull(shortUrl), false);
     }
 
     @RequestMapping(path = "/api/shorten", method = RequestMethod.GET)
     public Address shorten(@RequestParam String url) {
-        return urlManager.process(url);
+        return urlProcessor.process(url);
     }
 
     @ExceptionHandler(NoSuchElementException.class)

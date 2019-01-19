@@ -11,7 +11,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UrlManager {
+public class UrlProcessor {
 
     @Autowired
     private AddressRepository addressRepository;
@@ -21,9 +21,10 @@ public class UrlManager {
     private RedisTemplate redisTemplate;
 
     private static final String charMap = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    private static final String regex = "^(http|https|ftp)(://).+";
 
     public Address process(String url) {
-        if (!url.startsWith("http://") || !url.startsWith("https://") || !url.startsWith("ftp://")) {
+        if (!url.matches(regex)) {
             url = "http://" + url;
         }
 

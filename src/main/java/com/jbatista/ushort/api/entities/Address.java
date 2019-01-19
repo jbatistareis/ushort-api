@@ -1,14 +1,15 @@
 package com.jbatista.ushort.api.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.io.Serializable;
 import java.util.Date;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
 @RedisHash("addres")
-public class Address implements Serializable {
+public class Address {
 
     @JsonProperty("shortUrl")
+    @Id
     private String id;
     private String fullUrl;
     private Date expires;
