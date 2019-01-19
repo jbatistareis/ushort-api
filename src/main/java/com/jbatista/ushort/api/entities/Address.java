@@ -5,7 +5,7 @@ import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
-@RedisHash("addres")
+@RedisHash("address")
 public class Address {
 
     @JsonProperty("shortUrl")
