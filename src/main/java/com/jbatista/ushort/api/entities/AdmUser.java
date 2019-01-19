@@ -2,15 +2,15 @@ package com.jbatista.ushort.api.entities;
 
 public class AdmUser {
 
-    private String usetname;
+    private String username;
     private String Password;
 
-    public String getUsetname() {
-        return usetname;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUsetname(String usetname) {
-        this.usetname = usetname;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

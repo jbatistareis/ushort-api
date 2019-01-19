@@ -1,13 +1,12 @@
 package com.jbatista.ushort.api.controllers;
 
-import com.jbatista.ushort.api.entities.Address;
+import com.jbatista.ushort.api.entities.AddressPage;
 import com.jbatista.ushort.api.entities.AdmUser;
 import com.jbatista.ushort.api.entities.Configuration;
 import com.jbatista.ushort.api.repositories.AddressRepository;
 import com.jbatista.ushort.api.services.Administration;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,20 +44,20 @@ public class AdmController {
     }
 
     @RequestMapping(path = "/api/admin/url", method = RequestMethod.GET)
-    public Page<Address> listUrls(@RequestParam int page, @RequestParam int size) {
-        return addressRepository.findAllByOrderByFullUrl(PageRequest.of(page, size));
+    public AddressPage listUrls(@RequestParam int page, @RequestParam int size) {
+        return new AddressPage(addressRepository.findAllByOrderByFullUrl(PageRequest.of(page, size)));
     }
 
     @RequestMapping(path = "/api/admin/url/search", method = RequestMethod.GET)
-    public Stream<Address> searchUrls(@RequestParam String query) {
-        return addressRepository.findAllByOrderByFullUrl()
+    public AddressPage searchUrls(@RequestParam String query) {
+        return new AddressPage(addressRepository.findAllByOrderByFullUrl()
                 .filter(address -> address.getFullUrl().contains(query))
-                .get();
+                .get().collect(Collectors.toList()));
     }
 
-    @RequestMapping(path = "/api/admin/url/{id}", method = RequestMethod.DELETE)
-    public void deleteUrl(@PathVariable String id) {
-        addressRepository.deleteById(id);
+    @RequestMapping(path = "/api/admin/url/{url}", method = RequestMethod.DELETE)
+    public void deleteUrl(@PathVariable String url) {
+        addressRepository.deleteById(url);
     }
 
 }

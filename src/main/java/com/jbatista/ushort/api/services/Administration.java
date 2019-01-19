@@ -34,14 +34,14 @@ public class Administration {
 
     public AdmUser getAdmUser() {
         final AdmUser admUser = new AdmUser();
-        admUser.setUsetname(configurationRepository.findById("1").get().getAdmUser());
+        admUser.setUsername(configurationRepository.findById("1").get().getAdmUser());
 
         return admUser;
     }
 
     public void saveAdmUser(AdmUser admUser) {
         final Configuration configuration = configurationRepository.findById("1").get();
-        configuration.setAdmUser(admUser.getUsetname());
+        configuration.setAdmUser(admUser.getUsername());
         configuration.setAdmPassword(bCryptPasswordEncoder.encode(admUser.getPassword()));
 
         configurationRepository.save(configuration);
