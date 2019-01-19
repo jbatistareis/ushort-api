@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.jbatista</groupId>
     <artifactId>ushort-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0</version>
     <name>U-Short API</name>
     <description>Demo URL shortener project for VanHack</description>
 
@@ -19,6 +19,7 @@
     </properties>
 
     <dependencies>
+        
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
@@ -48,6 +49,7 @@
             <artifactId>jedis</artifactId>
             <version>2.9.1</version>
         </dependency>
+
     </dependencies>
 
     <build>

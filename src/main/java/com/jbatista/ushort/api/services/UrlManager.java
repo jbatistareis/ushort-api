@@ -5,6 +5,7 @@ import com.jbatista.ushort.api.entities.Configuration;
 import com.jbatista.ushort.api.repositories.AddressRepository;
 import com.jbatista.ushort.api.repositories.ConfigurationRepository;
 import java.util.Calendar;
+import java.util.zip.CRC32;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,13 @@ public class UrlManager {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    private static final String charMap = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
     public Address process(String url) {
+        if (!url.startsWith("http://") || !url.startsWith("https://") || !url.startsWith("ftp://")) {
+            url = "http://" + url;
+        }
+
         final Configuration configuration = configurationRepository.findById("1").get();
 
         final Calendar expiration = Calendar.getInstance();
@@ -35,8 +42,27 @@ public class UrlManager {
         return address;
     }
 
+    public String getFull(String id) {
+        return addressRepository.findById(id).get().getFullUrl();
+    }
+
+    // when using CRC32 as id collisions can occur, but since entries have an expiration date and the probability is like 1% after tens of thousands, the risk is irrelevant
     public String shorten(String url) {
-        return url;
+        final CRC32 crc32 = new CRC32();
+        crc32.update(url.getBytes());
+
+        final StringBuilder sbCrcValue = new StringBuilder(String.valueOf(crc32.getValue()));
+        final StringBuilder sbShortUrl = new StringBuilder();
+
+        while (sbCrcValue.length() != 10) {
+            sbCrcValue.insert(0, '0');
+        }
+
+        for (int i = 0; i <= 8; i += 2) {
+            sbShortUrl.append(charMap.charAt(Integer.parseInt(sbCrcValue.substring(i, i + 2)) % 62));
+        }
+
+        return sbShortUrl.toString();
     }
 
 }
