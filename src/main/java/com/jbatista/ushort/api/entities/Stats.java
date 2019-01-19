@@ -5,6 +5,7 @@ public class Stats {
     private long reducedUrls = 0;
     private long reducedLeters = 0;
     private long averageUrlSize = 0;
+    private long reductionPercentage = 0;
 
     public long getReducedUrls() {
         return reducedUrls;
@@ -28,6 +29,14 @@ public class Stats {
 
     public void setAverageUrlSize(long averageUrlSize) {
         this.averageUrlSize = averageUrlSize;
+    }
+
+    public long getReductionPercentage() {
+        return reductionPercentage;
+    }
+
+    public void setReductionPercentage(long reductionPercentage) {
+        this.reductionPercentage = reductionPercentage;
     }
 
     public void incrementReducedUrls() {
