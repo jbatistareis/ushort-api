@@ -3,7 +3,8 @@ A URL shortener in the likes of bit.ly, it uses Redis as storage and to control 
 
 
 ### Setup  
-Set the environment variables `REDIS_HOST`, `REDIS_PORT`, and `REDIS_PASS` with their respective values.  
+First, install [Redis](https://redis.io/).  
+Then set the environment variables `REDIS_HOST`, `REDIS_PORT`, and `REDIS_PASS` with their respective values (use the `-e` flag on Docker).  
 ...or...   
 Create a file called `application.properties` on the same directory as the executable with this structure:  
 >redis.host=localhost
@@ -16,6 +17,7 @@ Path|Method|Description|Data
 -|-|-|-
 `/<short URL>`|GET|Redirects to the full URL using the `302 FOUND` code.  Returns `404 NOT FOUND` if there's no entry.|...
 `/api/shorten?url=<full URL>`|GET|Returns the short version of the URL and its expiration date.|`{"fullUrl":"http://g1.globo.com","expires":"2019-01-20T16:45:02.832+0000","shortUrl":"ENoxr"}`
+`/api/stats`|GET|Returns some statistics about data processing|`{"reducedUrls":6,"reducedLeters":115,"averageUrlSize":19,"reductionPercentage":79}`
 
 For administrative functions (the default credential is '_admin/admin_'), use:  
 Path|Method|Description|Data
