@@ -53,7 +53,7 @@ public class UrlProcessor {
 
         addressRepository.findAllByOrderByFullUrl().forEach(address -> {
             stats.incrementReducedUrls();
-            stats.incrementReducedLetters(Math.max(0, (address.getFullUrl().length() - 10)));
+            stats.incrementReducedLetters(Math.max(0, (address.getFullUrl().length() - 5)));
         });
 
         stats.setAverageUrlSize(stats.getReducedLeters() / stats.getReducedUrls());
