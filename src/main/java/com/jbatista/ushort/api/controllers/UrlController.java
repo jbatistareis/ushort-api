@@ -1,6 +1,7 @@
 package com.jbatista.ushort.api.controllers;
 
 import com.jbatista.ushort.api.entities.Address;
+import com.jbatista.ushort.api.entities.Stats;
 import com.jbatista.ushort.api.services.UrlProcessor;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,11 @@ public class UrlController {
     @RequestMapping(path = "/api/shorten", method = RequestMethod.GET)
     public Address shorten(@RequestParam String url) {
         return urlProcessor.process(url);
+    }
+
+    @RequestMapping(path = "/api/stats", method = RequestMethod.GET)
+    public Stats getStats() {
+        return urlProcessor.getStats();
     }
 
     @ExceptionHandler(NoSuchElementException.class)

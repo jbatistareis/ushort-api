@@ -2,6 +2,7 @@ package com.jbatista.ushort.api.services;
 
 import com.jbatista.ushort.api.entities.Address;
 import com.jbatista.ushort.api.entities.Configuration;
+import com.jbatista.ushort.api.entities.Stats;
 import com.jbatista.ushort.api.repositories.AddressRepository;
 import com.jbatista.ushort.api.repositories.ConfigurationRepository;
 import java.util.Calendar;
@@ -45,6 +46,19 @@ public class UrlProcessor {
 
     public String getFull(String id) {
         return addressRepository.findById(id).get().getFullUrl();
+    }
+
+    public Stats getStats() {
+        final Stats stats = new Stats();
+
+        addressRepository.findAllByOrderByFullUrl().forEach(address -> {
+            stats.incrementReducedUrls();
+            stats.incrementReducedLetters(Math.max(0, (address.getFullUrl().length() - 10)));
+        });
+
+        stats.setAverageUrlSize(stats.getReducedLeters() / stats.getReducedUrls());
+
+        return stats;
     }
 
     // when using CRC32 as id collisions can occur, but since entries have an expiration date and the probability is like 1% after tens of thousands, the risk is irrelevant
