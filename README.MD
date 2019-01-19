@@ -1,4 +1,4 @@
-# U-short  
+# U-short (API)  
 A URL shortener in the likes of bit.ly, it uses Redis as storage and to control entries expiration date.
 
 
