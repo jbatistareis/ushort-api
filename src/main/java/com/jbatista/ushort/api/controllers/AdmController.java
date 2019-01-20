@@ -33,22 +33,24 @@ public class AdmController {
         administration.saveConfiguration(configuration);
     }
 
+    /*
     @RequestMapping(path = "/api/admin/user", method = RequestMethod.GET)
     public AdmUser getUser() {
         return administration.getAdmUser();
     }
 
-    /*
+    
     @RequestMapping(path = "/api/admin/user", method = RequestMethod.POST)
     public void saveUser(@RequestBody AdmUser admUser) {
         administration.saveAdmUser(admUser);
     }
+     */
 
     @RequestMapping(path = "/api/admin/url", method = RequestMethod.GET)
     public AddressPage listUrls(@RequestParam int page, @RequestParam int size) {
         return new AddressPage(addressRepository.findAllByOrderByFullUrl(PageRequest.of(page, size)));
     }
-     */
+
     @RequestMapping(path = "/api/admin/url/search", method = RequestMethod.GET)
     public AddressPage searchUrls(@RequestParam String query) {
         return new AddressPage(addressRepository.findAllByOrderByFullUrl()
