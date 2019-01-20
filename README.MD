@@ -4,7 +4,7 @@ A URL shortener in the likes of bit.ly, it uses Redis as storage and to control 
 
 ### Demo
 The API can be accessed [here](https://ushort-api.herokuapp.com/), but without any user related functions.  
-A basic interface can be accessed [here](https://github.com/ushort-ui).
+A basic interface can be accessed [here](https://github.com/jbatistareis/ushort-ui).
 
 
 ### Setup  
