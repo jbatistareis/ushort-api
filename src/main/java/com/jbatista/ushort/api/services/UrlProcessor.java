@@ -56,8 +56,10 @@ public class UrlProcessor {
             stats.incrementReducedLetters(Math.max(0, (address.getFullUrl().length() - 5)));
         });
 
-        stats.setAverageUrlSize(stats.getReducedLeters() / stats.getReducedUrls());
-        stats.setReductionPercentage(Math.round(((stats.getReducedLeters() * 100) / ((stats.getReducedLeters() + (5 * stats.getReducedUrls()))))));
+        if (stats.getReducedUrls() > 0) {
+            stats.setAverageUrlSize(stats.getReducedLeters() / stats.getReducedUrls());
+            stats.setReductionPercentage(Math.round(((stats.getReducedLeters() * 100) / ((stats.getReducedLeters() + (5 * stats.getReducedUrls()))))));
+        }
 
         return stats;
     }
