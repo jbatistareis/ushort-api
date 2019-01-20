@@ -9,7 +9,8 @@ Then set the environment variables `REDIS_HOST`, `REDIS_PORT`, and `REDIS_PASS` 
 Create a file called `application.properties` on the same directory as the executable with this structure:  
 >redis.host=localhost
 >redis.port=6379
->redis.password=
+>redis.password=  
+Optional: set the server port (default 8080) with the argument `--server.port=<port>` when calling `java -jar`.  
 
 
 ### Usage  
