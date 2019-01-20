@@ -38,5 +38,5 @@ Path|Method|Description
 `/api/admin/user`|GET|Returns the administrative user information (password will always come as _null_).
 `/api/admin/user`|POST|Send a json to change username and password.
 `/api/admin/url?page=<number>&size=<number>`|GET|Pages through the entire URL database, use its various properties for control.
-`/api/admin/url/search?query=<partial URL>`|GET|Returns a page containing the URLs tha matches the term.
+`/api/admin/url/search?query=<partial URL>`|GET|Returns a page containing the URLs that matches the term.
 `/api/admin/url/<short URL>`|DELETE|Removes the designated URL from database.
