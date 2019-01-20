@@ -1,0 +1,5 @@
+FROM openjdk:8-jdk-alpine
+MAINTAINER github.com/jbatistareis
+EXPOSE 8080
+ADD target/*.jar ushort-api.jar
+ENTRYPOINT ["java", "-jar", "ushort-api.jar"]
