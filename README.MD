@@ -16,7 +16,7 @@ Create a file called `application.properties` on the same directory as the execu
 >redis.port=6379  
 >redis.password=
 
-Optional: set the server port (default 8080) with the argument `--server.port=<port>` when calling `java -jar`.  
+Optional: set the server port (default 8080) with the argument `--server.port=<port>` when calling `java -jar`, or setting the variable `server.port` on the `application.properties` file.  
 Docker example:
 >docker build -t ushort .  
 >docker run -p 8080:8080 -e REDIS_HOST=localhost -e REDIS_PORT=6379 -e REDIS_PASS=secret ushort
