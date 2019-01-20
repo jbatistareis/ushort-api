@@ -25,12 +25,13 @@ Path|Method|Description
 `/api/stats`|GET|Returns some statistics about data processing.
 
 For administrative functions (the default credential is '_admin/admin_'), use:  
+
 Path|Method|Description
 -|-|-
-`/api/admin/config`|GET|Returns the current configuration.  '_ttlHours_' stands for the time to live of a URL entry, after this time, it will be deleted.
+`/api/admin/config`|GET|Returns the current configuration. '_ttlHours_' stands for the time to live of a URL entry, after this time, it will be deleted.
 `/api/admin/config`|POST|Send a json to change settings.
 `/api/admin/user`|GET|Returns the administrative user information (password will always come as _null_).
 `/api/admin/user`|POST|Send a json to change username and password.
 `/api/admin/url?page=<number>&size=<number>`|GET|Pages through the entire URL database, use its various properties for control.
-`/api/admin/url/search?query=<partial URL>`|GET|Returns a page containing the URLs tha matches the term (example uses _'query=povo'_).
+`/api/admin/url/search?query=<partial URL>`|GET|Returns a page containing the URLs tha matches the term.
 `/api/admin/url/<short URL>`|DELETE|Removes the designated URL from database.
