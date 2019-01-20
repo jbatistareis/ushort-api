@@ -38,6 +38,7 @@ public class AdmController {
         return administration.getAdmUser();
     }
 
+    /*
     @RequestMapping(path = "/api/admin/user", method = RequestMethod.POST)
     public void saveUser(@RequestBody AdmUser admUser) {
         administration.saveAdmUser(admUser);
@@ -47,7 +48,7 @@ public class AdmController {
     public AddressPage listUrls(@RequestParam int page, @RequestParam int size) {
         return new AddressPage(addressRepository.findAllByOrderByFullUrl(PageRequest.of(page, size)));
     }
-
+     */
     @RequestMapping(path = "/api/admin/url/search", method = RequestMethod.GET)
     public AddressPage searchUrls(@RequestParam String query) {
         return new AddressPage(addressRepository.findAllByOrderByFullUrl()
