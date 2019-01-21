@@ -1,11 +1,9 @@
 package com.jbatista.ushort.api.services;
 
 import com.jbatista.ushort.api.entities.Address;
-import com.jbatista.ushort.api.entities.Configuration;
 import com.jbatista.ushort.api.entities.Stats;
 import com.jbatista.ushort.api.repositories.AddressRepository;
 import com.jbatista.ushort.api.repositories.ConfigurationRepository;
-import java.util.Calendar;
 import java.util.zip.CRC32;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,15 +24,7 @@ public class UrlProcessor {
             url = "http://" + url;
         }
 
-        final Configuration configuration = configurationRepository.findById("1").get();
-
-        final Calendar expiration = Calendar.getInstance();
-        expiration.add(Calendar.HOUR, configuration.getTtlHours());
-
-        final Address address = new Address(shorten(url), url, (configuration.getTtlHours() > 0) ? expiration.getTime() : null, configuration.getTtlHours() * 60 * 60);
-        addressRepository.save(address);
-
-        return address;
+        return addressRepository.save(new Address(shorten(url), url, configurationRepository.findById("1").get().getTtlHours()));
     }
 
     public String getFull(String id) {

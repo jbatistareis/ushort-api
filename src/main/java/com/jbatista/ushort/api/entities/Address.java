@@ -2,7 +2,9 @@ package com.jbatista.ushort.api.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.TimeToLive;
@@ -16,17 +18,21 @@ public class Address {
     private String fullUrl;
     private Date expires;
     @JsonIgnore
-    @TimeToLive
+    @TimeToLive(unit = TimeUnit.HOURS)
     private long ttl;
 
     public Address() {
     }
 
-    public Address(String shortUrl, String fullUrl, Date expires, long ttl) {
+    public Address(String shortUrl, String fullUrl, long ttl) {
+        final Calendar expiration = Calendar.getInstance();
+        expiration.add(Calendar.HOUR, (int) ttl);
+
         this.id = shortUrl;
         this.fullUrl = fullUrl;
-        this.expires = expires;
+        this.expires = (ttl >= 0) ? expiration.getTime() : null;
         this.ttl = ttl;
+
     }
 
     public String getId() {
