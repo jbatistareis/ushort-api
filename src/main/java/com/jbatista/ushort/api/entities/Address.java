@@ -24,9 +24,9 @@ public class Address {
     public Address() {
     }
 
-    public Address(String shortUrl, String fullUrl, long ttl) {
+    public Address(String shortUrl, String fullUrl, int ttl) {
         final Calendar expiration = Calendar.getInstance();
-        expiration.add(Calendar.HOUR, (int) ttl);
+        expiration.add(Calendar.HOUR, ttl);
 
         this.id = shortUrl;
         this.fullUrl = fullUrl;
