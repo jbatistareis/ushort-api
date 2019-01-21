@@ -8,7 +8,6 @@ import com.jbatista.ushort.api.repositories.ConfigurationRepository;
 import java.util.Calendar;
 import java.util.zip.CRC32;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,8 +17,6 @@ public class UrlProcessor {
     private AddressRepository addressRepository;
     @Autowired
     private ConfigurationRepository configurationRepository;
-    @Autowired
-    private RedisTemplate redisTemplate;
 
     private static final String charMap = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static final String regex = "^(http|https|ftp)(://).+";
@@ -34,12 +31,8 @@ public class UrlProcessor {
         final Calendar expiration = Calendar.getInstance();
         expiration.add(Calendar.HOUR, configuration.getTtlHours());
 
-        final Address address = new Address(shorten(url), url, (configuration.getTtlHours() > 0) ? expiration.getTime() : null);
+        final Address address = new Address(shorten(url), url, (configuration.getTtlHours() > 0) ? expiration.getTime() : null, configuration.getTtlHours() * 60 * 60);
         addressRepository.save(address);
-
-        if (configuration.getTtlHours() > 0) {
-            redisTemplate.expireAt(address.getId(), address.getExpires());
-        }
 
         return address;
     }
