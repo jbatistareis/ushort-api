@@ -12,7 +12,7 @@ First, install [Redis](https://redis.io/).
 Then set the environment variables `REDIS_URL` with the connection string (use the `-e` or `--env-file` flags on Docker).  
 ...or...   
 Create a file called `application.properties` on the same directory as the executable with the `redis.url` variable containing the connection string.  
->redis.url=redis://<USER>:<PASS>@<HOST>:<PORT>
+>redis.url=redis://[USER]:[PASS]@[HOST]:[PORT]
 
 Optional: set the server port (default 8080) with the argument `--server.port=<port>` when calling `java -jar`, or setting the variable `server.port` on the `application.properties` file.  
 Docker example:
