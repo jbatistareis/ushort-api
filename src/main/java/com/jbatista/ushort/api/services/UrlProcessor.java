@@ -4,7 +4,10 @@ import com.jbatista.ushort.api.entities.Address;
 import com.jbatista.ushort.api.entities.Stats;
 import com.jbatista.ushort.api.repositories.AddressRepository;
 import com.jbatista.ushort.api.repositories.ConfigurationRepository;
+import java.util.regex.Pattern;
 import java.util.zip.CRC32;
+import javax.validation.ValidationException;
+import org.apache.commons.validator.routines.UrlValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +20,16 @@ public class UrlProcessor {
     private ConfigurationRepository configurationRepository;
 
     private static final String charMap = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    private static final String regex = "^(http|https|ftp)(://).+";
+    private static final Pattern urlStartRegex = Pattern.compile("^(http|https|ftp)(://).+");
+    private static final UrlValidator urlValidator = new UrlValidator();
 
     public Address process(String url) {
-        if (!url.matches(regex)) {
+        if (!urlStartRegex.matcher(url).matches()) {
             url = "http://" + url;
+        }
+
+        if (!urlValidator.isValid(url)) {
+            throw new ValidationException("The URL is invalid");
         }
 
         return addressRepository.save(new Address(shorten(url), url, configurationRepository.findById("1").get().getTtlHours()));
@@ -55,7 +63,7 @@ public class UrlProcessor {
         final StringBuilder sbCrcValue = new StringBuilder(String.valueOf(crc32.getValue()));
         final StringBuilder sbShortUrl = new StringBuilder();
 
-        while (sbCrcValue.length() != 10) {
+        while (sbCrcValue.length() < 10) {
             sbCrcValue.insert(0, '0');
         }
 
